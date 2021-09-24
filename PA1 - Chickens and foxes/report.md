@@ -54,15 +54,15 @@ Solution length: 18
 Path: [(5, 4, 1), (5, 2, 0), (5, 3, 1), (3, 3, 0), (4, 3, 1), (3, 2, 0), (3, 3, 1), (2, 2, 0), (3, 2, 1), (2, 1, 0), (2, 2, 1), (0, 2, 0), (0, 3, 1), (0, 1, 0), (2, 1, 1), (1, 0, 0), (1, 1, 1), (0, 0, 0)]
 
 ### Discussion Questions 
-*Does path-checking depth-first search save significant memory with respect to breadth-first search?  Draw an example of a graph where path-checking DFS takes much more run-time than breadth-first search; include in your report and discuss.
+* Does path-checking depth-first search save significant memory with respect to breadth-first search?  Draw an example of a graph where path-checking DFS takes much more run-time than breadth-first search; include in your report and discuss.
  <br /> 
-	* Yes, path-checking DFS saves a significant amount of space being that only the current path is stored in memory while BFS stores all of the paths that are being explored. Without memoizing, DFS takes only O(m) space compared to BFS taking O(b^d) space. 
+	* Yes, there is a significant benefit to implementing path-checking DFS over BFS. BFS has to store all of its nodes at every level which creates a memory complexity of b^d (where b is the branching factor and d is the depth). Path checking DFS only has to store the path that it is currently on and thus only has a space complexity of O(m) (m being the maximum depth).
 	* Here is an example of path-checking DFS taking much longer than BFS. Path checking DFS runs in O(min(m^n, mb^m)) time while BFS runs in O(b^d) time.
    ![Image of DFS taking more time than BFS.](/img/comparison.jpg "Comparison of BFS to path checking DFS.")
 
 * Does memoizing DFS save significant memory with respect to breadth-first search?  Why or why not? As a reminder, there are two styles of depth-first search on a graph. One style, memoizing keeps track of all states that have been visited in some sort of data structure, and makes sure the DFS never visits the same state twice. 
  <br /> 
-    *  Yes, there is a significant benefit to implementing path-checking DFS over BFS. BFS has to store all of its nodes at every level which creates a memory complexity of b^d (where b is the branching factor and d is the depth). Path checking DFS only has to store the path that it is currently on and thus only has a space complexity of O(m) (m being the maximum depth).
+    *  No, memoizing DFS does not save significant memory in comparison to BFS. Memoizing DFS runs in O(min(n, b^m)) space while BFS runs in O(min(n, b^d)) space. Since m is the max depth, it can be much larger than d and thus in the worst case, BFS is better for space complexity. 
 
 
 ## Iterative Depth Search
@@ -101,3 +101,6 @@ Path: [(5, 4, 1), (5, 2, 0), (5, 3, 1), (3, 3, 0), (4, 3, 1), (3, 2, 0), (3, 3, 
    * The successor function would have to be changed to allow  checking for states in which there are more foxes than chickens (until the E limit has been reached). 
    * An upper bound of the amount of possible states is = (C+1) x (F+1) x 2 x (E+1)
      * Simply multiply the max possible amount of states for each argument to find the upper bound of possible states
+
+## Extra Credit
+* For extra credit I implemented a memoized version of dfs. This version is very similar to BFS, but targets successors in a very different order. Memozied DFS runs at O(min(n, b^m)) time complexity and O(min(n, b^m)) space complexity. 
