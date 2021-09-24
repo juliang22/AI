@@ -40,8 +40,6 @@ def bfs_search(search_problem):
         curr = to_visit.popleft()
         visited.add(curr.state)
         successors = search_problem.get_successors(curr) # Finds valid successor states
-        print(curr.state)
-        print([x.state for x in successors])
 
         if search_problem.check_goal(curr.state): # Check if goal state has been reached
             visited.add(curr.state)
