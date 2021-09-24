@@ -1,5 +1,7 @@
 
-# Julian Grunauer 9/21/21
+# Julian Grunauer 
+# 9/21/21 
+# CS76: Artificial Intelligence, PA1
 from collections import deque
 from SearchSolution import SearchSolution
 

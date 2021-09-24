@@ -1,7 +1,8 @@
-# Julian Grunauer 9/21/21
+# Julian Grunauer 
+# 9/21/21 
+# CS76: Artificial Intelligence, PA1
 from collections import deque
 from uninformed_search import SearchNode
-
 
 class FoxProblem:
     def __init__(self, start_state=(3, 3, 1)):

@@ -1,4 +1,6 @@
-# Julian Grunauer 9/21/21
+# Julian Grunauer 
+# 9/21/21 
+# CS76: Artificial Intelligence, PA1
 class SearchSolution:
     def __init__(self, problem, search_method, path=[], num_nodes=0):
         self.problem_name = str(problem)

@@ -1,4 +1,6 @@
-# Julian Grunauer 9/21/21
+# Julian Grunauer 
+# 9/21/21 
+# CS76: Artificial Intelligence, PA1
 from FoxProblem import FoxProblem
 from uninformed_search import bfs_search, dfs_search, ids_search, dfs_memoized
 
