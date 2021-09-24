@@ -1,5 +1,6 @@
+# Julian Grunauer 9/21/21
 from FoxProblem import FoxProblem
-from uninformed_search import bfs_search, dfs_search, ids_search
+from uninformed_search import bfs_search, dfs_search, ids_search, dfs_memoized
 
 # Create a few test problems:
 problem331 = FoxProblem((3, 3, 1))
@@ -12,13 +13,16 @@ problem551 = FoxProblem((5, 5, 1))
 #  in the solution object should be 0.
 
 # print(bfs_search(problem331))
-print(dfs_search(problem331))
-# print(ids_search(problem331))
+# print(dfs_search(problem331))
+print(ids_search(problem331))
+# print(dfs_memoized(problem331))
 
 # print(bfs_search(problem551))
-print(dfs_search(problem551))
-# print(ids_search(problem551))
+# print(dfs_search(problem551))
+print(ids_search(problem551))
+# print(dfs_memoized(problem551))
 
 # print(bfs_search(problem541))
-print(dfs_search(problem541))
-# print(ids_search(problem541))
+# print(dfs_search(problem541))
+print(ids_search(problem541))
+# print(dfs_memoized(problem541))
