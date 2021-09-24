@@ -1,5 +1,7 @@
 # CS76: AI - 21F - PA1 - Chickens & Foxes Report - Julian Grunauer - 9/21/21
 
+![Image of state space of (3, 3, 1).](/img/state_space.jpg "Image of state space of (3, 3, 1).")
+
 ## Evaluation
 * Do your implemented algorithms actually work? How well?
 <br /> 
