@@ -58,8 +58,9 @@ class Maze:
         self.height = len(lines)
 
         self.map = list("".join(lines))
-        lines.reverse() # So we can start at the bottom when iterating
-        self.lines = lines 
+        cpy = lines.copy()
+        cpy.reverse() # So we can start at the bottom when iterating
+        self.lines = cpy 
 
 
     def index(self, x, y):
@@ -95,16 +96,15 @@ class Maze:
     #  robot state, and generates a list of characters in order
     #  that they will need to be printed out in.
     def create_render_list(self):
-        #print(self.robotloc)
         renderlist = list(self.map)
 
         robot_number = 0
-        for index in range(0, len(self.robotloc), 2):
+        for index in range(1, len(self.robotloc), 2):
 
             x = self.robotloc[index]
             y = self.robotloc[index + 1]
 
-            renderlist[self.index(x, y)] = robotchar(robot_number)
+            renderlist[self.index(x, y)] = self.robotchar(robot_number)
             robot_number += 1
 
         return renderlist
@@ -128,8 +128,8 @@ class Maze:
         return s
 
 
-def robotchar(robot_number):
-    return chr(ord("A") + robot_number)
+    def robotchar(self, robot_number):
+        return chr(ord("A") + robot_number)
 
 
 # Some test code
