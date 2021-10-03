@@ -5,7 +5,7 @@
 * Run ```$python3 test_mazeworld.py``` to see the A* algorithm in a printed GUI (works for both single or multi-robot systems)
 * Run ```$python3 test_sensorless.py``` to see the A* algorithm in a printed GUI to finding the state of a blind robot in the fewest possible moves.
 
-* Both test_mazeworld.py and test_sensorless.py can be modified to run on different mazes/stateconfigurations. Change the maze by modifying the parameter for the test_maze# variable and pass in new goal locations to the test_mp variable (test_sensorless.py does not need goal locations, so only modify the test_maze#). 
+* Both test_mazeworld.py and test_sensorless.py can be modified to run on different mazes/stateconfigurations. Change the maze by modifying the parameter for the test_maze# variable and pass in new goal locations to the test_mp variable (test_sensorless.py does not need goal locations, so only modify the test_maze#). You can comment out different mazes to see each maze run independently.
 
 ## Problem Description
 Here is a maze, drawn in the venerable tradition of ASCII art:

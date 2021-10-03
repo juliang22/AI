@@ -39,7 +39,9 @@ if __name__ == "__main__":
     test_mp = MazeworldProblem(test_maze3, (1, 4, 1, 3, 1, 2))
     result = astar_search(test_mp, manhattan_heuristic)
     print(result)
-    test_mp.animate_path(result.path)
+    result2 = astar_search(test_mp, null_heuristic)
+    print(result2)
+    #test_mp.animate_path(result.path)
 
     # Maze 4
     # test_maze4 = Maze("maze4.maz")
