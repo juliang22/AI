@@ -1,6 +1,6 @@
 import chess
 
-class AlphaBetaAI():
+class Iterative_AlphaBetaAI():
     def __init__(self, max_depth):
         # Initializes algo with the max_depth allowed and the value of each piece
         self.max_depth = max_depth
@@ -30,7 +30,7 @@ class AlphaBetaAI():
         exit()
 
     # Recursive minimax algorithm, exploring at depths > 1 (root of the algorithm is in choose_moves)
-    def ab_minimax(self, board, depth, count, alpha, beta):
+    def iterative_ab_minimax(self, board, depth, count, alpha, beta):
         if depth == self.max_depth: 
             return self.evaluation(board)
 
@@ -40,7 +40,7 @@ class AlphaBetaAI():
             maxx = float('-inf')
             for move in moves:
                 board.push(move)
-                val = self.ab_minimax(board, depth+1, count, alpha, beta)
+                val = self.iterative_ab_minimax(board, depth+1, count, alpha, beta)
                 board.pop()
                 maxx = max(maxx, val)
 
@@ -53,7 +53,7 @@ class AlphaBetaAI():
             minn = float('inf')
             for move in moves:
                 board.push(move)
-                val = self.ab_minimax(board, depth+1, count, alpha, beta)
+                val = self.iterative_ab_minimax(board, depth+1, count, alpha, beta)
                 board.pop()
                 minn = min(val, minn)
 
@@ -81,21 +81,31 @@ class AlphaBetaAI():
         # moves = list(board.legal_moves)
         moves = self.prioritize(board)
         score = float('-inf') if board.turn == chess.WHITE else float('inf')
+
         best_move = None
-        for move in moves:
-            # Run minimax algo and get score for that move
-            board.push(move)
-            val = self.ab_minimax(board, 1, count, float('-inf'), float('inf'))
-            if board.is_game_over(): self.end_game(board, move)
-            board.pop()                
 
-            # Determine if that score is the best move
-            if val >= score and board.turn == chess.WHITE:
-                best_move = move
-                score = val
-            elif val <= score and board.turn == chess.BLACK:
-                best_move = move
-                score = val
+        i = self.max_depth
+        self.max_depth = 0
+        temp_best = None
+        while self.max_depth != i:
+            
+            for move in moves:
+                # Run minimax algo and get score for that move
+                board.push(move)
+                val = self.iterative_ab_minimax(board, 0, count, float('-inf'), float('inf'))
+                if board.is_game_over(): self.end_game(board, move)
+                board.pop()                
+
+                # Determine if that score is the best move
+                if val >= score and board.turn == chess.WHITE:
+                    best_move = move
+                    score = val
+                elif val <= score and board.turn == chess.BLACK:
+                    best_move = move
+                    score = val
+            temp_best = best_move
+            self.max_depth += 1
+            print('Temp best move: ', temp_best)
+
+        print('Returned best move: ', best_move)
         return best_move
-
-

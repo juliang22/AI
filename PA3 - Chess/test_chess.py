@@ -3,17 +3,17 @@ from RandomAI import RandomAI
 from HumanPlayer import HumanPlayer
 from MinimaxAI import MinimaxAI
 from AlphaBetaAI import AlphaBetaAI
+from iterative_deepening_abminimax import Iterative_AlphaBetaAI
 from ChessGame import ChessGame
-from again import AGAIN
 import sys
 
 
 
+# player1 = MinimaxAI(3)
+# player1 = AlphaBetaAI(3)
+player1 = Iterative_AlphaBetaAI(3)
 # player1 = HumanPlayer()
-# player2 = MinimaxAI(3)
-player2 = AlphaBetaAI(3)
-# player1 = AGAIN(3)
-player1 = RandomAI()
+player2 = RandomAI()
 
 
 
@@ -25,4 +25,3 @@ while not game.is_game_over():
     game.make_move()
 
 
-#print(hash(str(game.board)))
