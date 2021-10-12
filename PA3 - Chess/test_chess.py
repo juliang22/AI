@@ -11,7 +11,7 @@ import sys
 
 # player1 = MinimaxAI(3)
 # player1 = AlphaBetaAI(3)
-player1 = Iterative_AlphaBetaAI(3)
+player1 = Iterative_AlphaBetaAI(6)
 # player1 = HumanPlayer()
 player2 = RandomAI()
 

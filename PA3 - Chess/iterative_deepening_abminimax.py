@@ -1,4 +1,5 @@
 import chess
+import time
 
 class Iterative_AlphaBetaAI():
     def __init__(self, max_depth):
@@ -82,8 +83,10 @@ class Iterative_AlphaBetaAI():
         moves = self.prioritize(board)
         score = float('-inf') if board.turn == chess.WHITE else float('inf')
 
-        best_move = None
+        # Time limit
+        start_time = time.time()
 
+        best_move = None
         i = self.max_depth
         self.max_depth = 0
         temp_best = None
@@ -93,6 +96,10 @@ class Iterative_AlphaBetaAI():
                 # Run minimax algo and get score for that move
                 board.push(move)
                 val = self.iterative_ab_minimax(board, 0, count, float('-inf'), float('inf'))
+
+                # Algorithm shouldn't take longer than about 10 seconds
+                if time.time() - start_time >= 10 and best_move: return best_move
+
                 if board.is_game_over(): self.end_game(board, move)
                 board.pop()                
 
