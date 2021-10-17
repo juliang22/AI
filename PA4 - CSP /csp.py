@@ -1,6 +1,9 @@
 class CSP():
-	def __init__(self, v_names, d_names, total_domains, c_names, constraint_checker):
+	def __init__(self, v_names, d_names, total_domains, c_names, constraint_checker, inference = None, heuristic = None,):
+		self.inference = inference
+		self.heuristic = heuristic
 		self.c_check = constraint_checker
+
 		self.v_list = v_names # list of variable names
 		self.total_domains = total_domains # list of all possible domains
 
@@ -21,6 +24,9 @@ class CSP():
 
 	
 	def to_str(self, mapped,call_count):
+		if not mapped: 
+			print("Solution could not be found :(")
+			exit()
 		print('Solution:')
 		for val, dom in mapped.items():
 			print(f'{self.v_list[val]} is {self.total_domains[dom]}')
@@ -28,20 +34,38 @@ class CSP():
 
 
 
-	def backtrack(self, call_count, heuristic = None, potential = {}):
+	def backtrack(self, call_count, potential = {}):
 		# Goal check if we've reached the end 
 		if len(potential) == len(self.v_list): return potential
 		
 		# List of variables that have yet to be assigned
 		leftover_vars = [v for v in self.v if v not in potential]
-		next_var = heuristic(leftover_vars, potential, self.c, self.d) or leftover_vars[0]
-		for val in self.d[next_var]:
-			call_count[0] +=1
-			potential[next_var] = val
+		if self.heuristic and self.heuristic.__name__ != 'lcv_heuristic':
+			next_var = self.heuristic(leftover_vars, potential, self.c, self.d, self.total_domains)
+		else:
+			next_var = leftover_vars[0]
 
-			if self.c_check(next_var, potential, self.c): 
-				res = self.backtrack(call_count, heuristic, potential) 
+		for val in self.d[next_var]:
+			call_count[0] += 1
+
+			if self.heuristic and self.heuristic.__name__ == 'lcv_heuristic':
+				potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
+			else:
+				potential[next_var] = val
+
+			if self.c_check(next_var, potential, self.c, self.total_domains): 
+				# If inference function is available
+				if self.inference:
+					pre_inference_dom = self.d.copy()
+					self.d[next_var] = [val]
+					if not self.inference(self.d, self.c): 
+						self.d = pre_inference_dom
+						continue
+
+				res = self.backtrack(call_count) 
 				if res is not None: return res
+
+				if self.inference: self.d = pre_inference_dom 
 			
 			potential.pop(next_var)
 

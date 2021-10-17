@@ -1,40 +1,11 @@
 from csp import CSP
+from heuristics import lcv_heuristic, degree_heuristic, mrv_heuristic, AC3
 
-
-def check_constraints(next_var, potential, constraints):
+def check_constraints(next_var, potential, constraints, d):
 	for con in constraints[next_var]:
 		if con not in potential: continue
 		if potential[con] == potential[next_var]: return False
 	return True
-
-
-def degree_heuristic(leftover_vars, potential, constraints, domain):
-	maxx = float('-inf')
-	res = leftover_vars[0]
-	for var in leftover_vars:
-		con = constraints[var]
-		if len(con) > maxx:
-			maxx = max(maxx, len(con))
-			res = var
-	return res
-
-
-def mrv_heuristic(leftover_vars, potential, constraints, domain):
-	res = leftover_vars[0]
-	minn = float('inf')
-	res = leftover_vars[0]
-	for var in leftover_vars:
-		dom = {x for x in domain[var]}
-		for con in constraints[var]:
-			if potential.get(con, None) in dom:
-				dom.discard(potential[con])
-		if len(dom) < minn:
-			minn = min(minn, len(dom))
-			res = var
-	print(res)
-	return res
-		
-
 
 if __name__ == '__main__':
 	v_names = ['Western Australia', 'Northern Territory', 'South Australia', 'Queensland', 'New South Wales', 'Victoria', 'Tasmania']
@@ -52,10 +23,34 @@ if __name__ == '__main__':
 		'Tasmania': ['Victoria']
 	}
 
-	mappy = CSP(v_names, domain, total_domain, constraints, check_constraints)
 	call_count = [0]
-	# sol = mappy.backtrack(call_count, mrv_heuristic)
-	sol = mappy.backtrack(call_count, degree_heuristic)
-	mappy.to_str(sol, call_count)
+
+
+	
+	# Testing without heuristics or inference techniques
+	# normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
+	# sol = normal.backtrack(call_count)
+	# normal.to_str(sol, call_count)
+
+	# Testing MRV Heuristic
+	# mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, mrv_heuristic)
+	# sol = mrv_test.backtrack(call_count)
+	# mrv_test.to_str(sol, call_count)
+
+	# Testing Degree Heuristic
+	# degree_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, degree_heuristic)
+	# sol = degree_test.backtrack(call_count)
+	# degree_test.to_str(sol, call_count)
+
+	# Testing LCV Heuristic 
+	# TODO: FIX 
+	# lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
+	# sol = lcv_test.backtrack(call_count)
+	# lcv_test.to_str(sol, call_count)
+
+	# Testing Inference
+	# AC3_test = CSP(v_names, domain, total_domain, constraints, check_constraints, AC3)
+	# sol = AC3_test.backtrack(call_count)
+	# AC3_test.to_str(sol, call_count)
 	
 	
