@@ -1,3 +1,4 @@
+# CS76: AI - 21F - PA4 - CSP Map/Circuitboard Solver - Julian Grunauer - 10/19/21
 from collections import defaultdict
 
 def lcv_heuristic(next_var, leftover_vars, potential, constraints, domain):

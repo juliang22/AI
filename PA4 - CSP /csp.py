@@ -1,9 +1,11 @@
 class CSP():
 	def __init__(self, v_names, d_names, total_domains, c_names, constraint_checker, inference = None, heuristic = None,):
+		# Initializing potential inference/heuristic function and the constraint checker
 		self.inference = inference
 		self.heuristic = heuristic
 		self.c_check = constraint_checker
 
+		# Below initializations help with converting variable/domain names from strings to integers to speed up computation/take less memory
 		self.v_list = v_names # list of variable names
 		self.total_domains = total_domains # list of all possible domains
 
@@ -22,31 +24,46 @@ class CSP():
 		for k, v in c_names.items():
 			self.c[self.v_names[k]] = [self.v_names[i] for i in v]
 
-	
-	def to_str(self, mapped,call_count):
+	# Function called after solution is found to convert solution back to variable names/domains
+	def to_str(self, mapped,call_count, heuristic = None, inference = None):
 		if not mapped: 
 			print("Solution could not be found :(")
 			exit()
 		print('Solution:')
+
 		for val, dom in mapped.items():
 			print(f'{self.v_list[val]} is {self.total_domains[dom]}')
 		print(f'Explored {call_count} possible states')
+		if self.heuristic: print(f'CSP used the {self.heuristic.__name__}')
+		if self.inference: print(f'CSP used the {self.inference.__name__} inference')
 
 
-
+	# Recursive backtracking algorithm to find a valid solution to CSP problem
 	def backtrack(self, call_count, potential = {}):
 		# Goal check if we've reached the end 
 		if len(potential) == len(self.v_list): return potential
 		
-		leftover_vars = [v for v in self.v if v not in potential] # List of variables that have yet to be assigned
-		next_var = leftover_vars[0] # Next variable to find a domain for
+		# List of variables that have yet to be assigned
+		leftover_vars = [v for v in self.v if v not in potential]
+
+		# Picking next variable based on a heuristic if it is available
+		if self.heuristic and self.heuristic.__name__ != 'lcv_heuristic':
+			next_var = self.heuristic(leftover_vars, potential, self.c, self.d)
+		else:
+			next_var = leftover_vars[0]
+
 		for val in self.d[next_var]:
 			call_count[0] += 1
 
-			potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
+			# Picking next domain based on a heuristic if it is available
+			if self.heuristic and self.heuristic.__name__ == 'lcv_heuristic':
+				potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
+			else:
+				potential[next_var] = val
 
+			# Continue if the domain is valid
 			if self.c_check(next_var, potential, self.c, self.total_domains): 
-				# If inference function is available
+				# If inference function is available, update the domain
 				if self.inference:
 					pre_inference_dom = self.d.copy()
 					self.d[next_var] = [val]

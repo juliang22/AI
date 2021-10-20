@@ -1,12 +1,15 @@
+# CS76: AI - 21F - PA4 - CSP Map/Circuitboard Solver - Julian Grunauer - 10/19/21
 from csp import CSP
 from heuristics import lcv_heuristic, degree_heuristic, mrv_heuristic, AC3
 
+# Function to check valid domains
 def check_constraints(next_var, potential, constraints, d):
 	for con in constraints[next_var]:
 		if con not in potential: continue
 		if potential[con] == potential[next_var]: return False
 	return True
 
+# Problem set up
 if __name__ == '__main__':
 	v_names = ['Western Australia', 'Northern Territory', 'South Australia', 'Queensland', 'New South Wales', 'Victoria', 'Tasmania']
 	domain = {}
@@ -23,14 +26,12 @@ if __name__ == '__main__':
 		'Tasmania': ['Victoria']
 	}
 
-	call_count = [0]
+	call_count = [0] # Variable to track amount of time the recursive backtracking function is called
 
-
-	
 	# Testing without heuristics or inference techniques
-	# normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
-	# sol = normal.backtrack(call_count)
-	# normal.to_str(sol, call_count)
+	normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
+	sol = normal.backtrack(call_count)
+	normal.to_str(sol, call_count)
 
 	# Testing MRV Heuristic
 	# mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, mrv_heuristic)
@@ -43,10 +44,9 @@ if __name__ == '__main__':
 	# degree_test.to_str(sol, call_count)
 
 	# Testing LCV Heuristic 
-	# TODO: FIX 
-	lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
-	sol = lcv_test.backtrack(call_count)
-	lcv_test.to_str(sol, call_count)
+	# lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
+	# sol = lcv_test.backtrack(call_count)
+	# lcv_test.to_str(sol, call_count)
 
 	# Testing Inference
 	# AC3_test = CSP(v_names, domain, total_domain, constraints, check_constraints, AC3)
