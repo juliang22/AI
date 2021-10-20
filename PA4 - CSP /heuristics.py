@@ -1,29 +1,27 @@
 from collections import defaultdict
 
 def lcv_heuristic(next_var, leftover_vars, potential, constraints, domain):
-	dom = {x for x in domain[next_var]}
+	d_copy = domain[next_var].copy()
 	for con in constraints[next_var]:
-		if potential.get(con, None) in dom:
-			dom.discard(potential[con])
-
-	for pot_dom in dom:
-		maxx = float('-inf')
+		if potential.get(con, None):
+			d_copy.remove(potential[con])
+	
+	maxx = float('-inf')
+	res = d_copy[0]
+	for dom in d_copy:
+		total = 0
 		for con in constraints[next_var]:
-			if con not in potential:
-				summ = 0
-				for other_con in constraints[con]:
-					other_dom = domain[other_con]
-					# if other_con == con: continue
-					if pot_dom in other_dom: other_dom.remove(pot_dom)
-					if potential.get(other_con, None) in other_dom:
-						other_dom.discard(potential[con])
-					summ += len(other_dom)
-				if summ > maxx:
-					maxx = max(maxx, summ)
-					res = pot_dom
+			con_dom = set(domain[con]) - {dom}
+			for cons_cons in constraints[con]:
+				if potential.get(cons_cons, None):
+					con_dom -= {potential[cons_cons]}
+			total += len(con_dom)
+
+		if total > maxx:
+			maxx = len(con_dom)
+			res = dom
 	return res
-
-
+			
 
 def degree_heuristic(leftover_vars, potential, constraints, domain):
 	maxx = float('-inf')
@@ -36,16 +34,14 @@ def degree_heuristic(leftover_vars, potential, constraints, domain):
 	return res
 
 
-def mrv_heuristic(leftover_vars, potential, constraints, domain, t):
+def mrv_heuristic(leftover_vars, potential, constraints, domain):
 	res = leftover_vars[0]
 	minn = float('inf')
 	for var in leftover_vars:
 		dom = {x for x in domain[var]}
 		for con in constraints[var]:
 			if potential.get(con, None) in dom:
-				# dom.discard(potential[con])
-				print(t[potential[con]])
-				dom = dom - set(t[potential[con]])
+				dom.discard(potential[con])
 		if len(dom) < minn:
 			minn = min(minn, len(dom))
 			res = var

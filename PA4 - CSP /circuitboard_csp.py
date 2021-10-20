@@ -12,17 +12,11 @@ def check_constraints(next_var, potential, constraints, d):
 		con_bl, new_bl = (d[potential[con]][0][0], d[potential[con]][0][1]+con_h), (d[potential[next_var]][0][0], d[potential[next_var]][0][1]+new_h)
 		con_br, new_br = (d[potential[con]][1][0], d[potential[con]][1][1]+con_h), (d[potential[next_var]][1][0], d[potential[next_var]][1][1]+new_h)
 
-		# print(next_var)
-		# print(new_tl,new_tr, new_bl, new_br)
-		# print(con)
-		# print(con_tl, con_tr, con_bl, con_br)
-		# for k,v in potential.items():
-		# 	print('p:',k, d[v])
 		if (len({con_tl, con_tr, con_bl, con_br} - {new_tl, new_tr, new_bl, new_br}) < 4): return False
 		upper = [max(con_tl[0], new_tl[0]), min(con_tr[0], new_tr[0])]
-		lower = [max(con_bl[1], new_bl[1]), min(con_br[1], new_br[1])]
+		lower = [max(con_tl[1], new_tl[1]), min(con_br[1], new_br[1])]
 
-		if upper[0] <= upper[1] and lower[0] <= lower[1]: return False
+		if upper[0] <= upper[1] and lower[0] <= lower[1]: return False 
 
 	return True
 
@@ -63,9 +57,9 @@ if __name__ == '__main__':
 	
 	# Testing MRV Heuristic
 	# TODO: FIX
-	mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, mrv_heuristic)
-	sol = mrv_test.backtrack(call_count)
-	mrv_test.to_str(sol, call_count)
+	# mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, circuitboard_mrv_heuristic)
+	# sol = mrv_test.backtrack(call_count)
+	# mrv_test.to_str(sol, call_count)
 
 	# Testing Degree Heuristic
 	# degree_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, degree_heuristic)
@@ -85,9 +79,6 @@ if __name__ == '__main__':
 	# AC3_test.to_str(sol, call_count)
 
 
+	print("Grid starts from top-left corner and array represents coordinates in the form 'top-left', 'top-right', 'downward height'")
 
-
-
-
-	print("Array represents coordinates in the form 'top-left', 'top-right', 'height'")
 

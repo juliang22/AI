@@ -38,20 +38,12 @@ class CSP():
 		# Goal check if we've reached the end 
 		if len(potential) == len(self.v_list): return potential
 		
-		# List of variables that have yet to be assigned
-		leftover_vars = [v for v in self.v if v not in potential]
-		if self.heuristic and self.heuristic.__name__ != 'lcv_heuristic':
-			next_var = self.heuristic(leftover_vars, potential, self.c, self.d, self.total_domains)
-		else:
-			next_var = leftover_vars[0]
-
+		leftover_vars = [v for v in self.v if v not in potential] # List of variables that have yet to be assigned
+		next_var = leftover_vars[0] # Next variable to find a domain for
 		for val in self.d[next_var]:
 			call_count[0] += 1
 
-			if self.heuristic and self.heuristic.__name__ == 'lcv_heuristic':
-				potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
-			else:
-				potential[next_var] = val
+			potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
 
 			if self.c_check(next_var, potential, self.c, self.total_domains): 
 				# If inference function is available

@@ -44,9 +44,9 @@ if __name__ == '__main__':
 
 	# Testing LCV Heuristic 
 	# TODO: FIX 
-	# lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
-	# sol = lcv_test.backtrack(call_count)
-	# lcv_test.to_str(sol, call_count)
+	lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
+	sol = lcv_test.backtrack(call_count)
+	lcv_test.to_str(sol, call_count)
 
 	# Testing Inference
 	# AC3_test = CSP(v_names, domain, total_domain, constraints, check_constraints, AC3)
