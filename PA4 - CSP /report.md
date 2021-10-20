@@ -5,7 +5,7 @@ Using backtracking, heuristics, and inference techniques, I solved both the map 
 
 
 ## Evaluation
-The algorithms run extremely fast and are implemented well. Unfortunately, while all heuristics function properly for the map coloring algorithm, I was unable to get MRV or LCV functioning properly for the circuitboard problem. The issue lies in the way I decided to set up each variables domain. Each possible domain is initialized with 2 tuples representing the top-left and top-right corners of the circuit as well as a third variable representing the downward height. With the map-coloring problem, all variables could have the same domain, but in this algorithm, all domains are different. I struggled with finding a way to manipulate the potential domains in the ways that the heuristics demanded. Despite this setback, I managed to make the MRV heuristic and the AC3 algorithm are fully functional across both problems. 
+The algorithms run extremely fast and are implemented well. All aspects of each problem were solved and, to my knowledge, there are 0 bugs.  
 
 No Heuristic Solution:
 * Western Australia is Red
@@ -67,6 +67,7 @@ AC3 Inference Solution:
 ## Discussion Questions
 
 * (map coloring test) Describe the results from the test of your solver with and without heuristic, and with and without inference on the map coloring problem.
+  * I manipulated the order of the variables to test out each heuristic. For example, if I initialize the values to ['Western Australia', 'Northern Territory', 'Queensland', 'South Australia' ...], the order selected will go 0, 1, 3. Queensland is skipped over because South Australia has less possible options for what it could be. For the degree heuristic, regardless of the order of the values, South Australia is selected because it is implicated in the most amount of constraints. The least constraining value simply selects the value for a given variable that allows for the most future choices. For example, in the order ['Western Australia', 'Northern Territory',  'Queensland', 'South Australia',...] , my algorithm first assigns Western Australia to blue, Northern Territory to green. Since Queensland has 2 valid domains left (blue or red), lcv selects blue as it allows for more potential options for Southern Australia (1 option) vs red which restricts Southern Australia to 0 options. With forward checking, AC3 is able to vastly speed up the algorithm by reducing the domain of other variables after a selection has been made. With my implementation, my backtracking algorithm is able to find the solution with only 7 recursions. Check the above results to compare the amount of times each algorithm recursed. 
 
 * (circuit-board) In your write-up, describe the domain of a variable corresponding to a component of width w and height h, on a circuit board of width n and height m.  Make sure the component fits completely on the board.
 	* I set the domain of each variable to an array of elements where each element was an array containing the top-left coordinates, top-right coordinates, and downward height. A component with w width and h height would have the first potential domain of [[(0, 0), (0,w-1), h]]. While w < n and the y coordinate + h < m, the domain is added to the list of possible domains for that component.

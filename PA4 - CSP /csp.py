@@ -51,6 +51,8 @@ class CSP():
 			next_var = self.heuristic(leftover_vars, potential, self.c, self.d)
 		else:
 			next_var = leftover_vars[0]
+		
+		print(next_var)
 
 		for val in self.d[next_var]:
 			call_count[0] += 1
@@ -60,6 +62,7 @@ class CSP():
 				potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
 			else:
 				potential[next_var] = val
+			print('v',potential[next_var] )
 
 			# Continue if the domain is valid
 			if self.c_check(next_var, potential, self.c, self.total_domains): 

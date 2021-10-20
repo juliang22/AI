@@ -1,7 +1,7 @@
 # CS76: AI - 21F - PA4 - CSP Map/Circuitboard Solver - Julian Grunauer - 10/19/21
 from csp import CSP
 from collections import defaultdict
-from heuristics import lcv_heuristic, degree_heuristic, mrv_heuristic, AC3
+from heuristics import AC3
 
 # Function to check if domain is a valid choice
 def check_constraints(next_var, potential, constraints, d):
@@ -56,23 +56,7 @@ if __name__ == '__main__':
 	normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
 	sol = normal.backtrack(call_count)
 	normal.to_str(sol, call_count)
-	
-	# Testing MRV Heuristic
-	# TODO: Not fully functioning
-	# mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, mrv_heuristic)
-	# sol = mrv_test.backtrack(call_count)
-	# mrv_test.to_str(sol, call_count)
 
-	# Testing Degree Heuristic
-	# degree_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, degree_heuristic)
-	# sol = degree_test.backtrack(call_count)
-	# degree_test.to_str(sol, call_count)
-
-	# Testing LCV Heuristic 
-	# TODO: Not fully functioning
-	# lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
-	# sol = lcv_test.backtrack(call_count)
-	# lcv_test.to_str(sol, call_count)
 
 
 	# Testing Inference

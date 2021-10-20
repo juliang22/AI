@@ -4,7 +4,7 @@ from collections import defaultdict
 def lcv_heuristic(next_var, leftover_vars, potential, constraints, domain):
 	d_copy = domain[next_var].copy()
 	for con in constraints[next_var]:
-		if potential.get(con, None):
+		if potential.get(con, None) and potential[con] in d_copy:
 			d_copy.remove(potential[con])
 	
 	maxx = float('-inf')
