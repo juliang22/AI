@@ -5,7 +5,7 @@ Using backtracking, heuristics, and inference techniques, I solved both the map 
 
 
 ## Evaluation
-The algorithms run extremely fast and are implemented well. All aspects of each problem were solved and, to my knowledge, there are 0 bugs.  
+The algorithms run extremely fast and are implemented well. All aspects of each problem were solved and, to my knowledge, there are 0 bugs. I also tested my algorithms on the states of america with 4 colors which proved successful. A heuristic/inference must be used as a normal backtracking approach is way too slow for the amount of possible combinations. 
 
 No Heuristic Solution:
 * Western Australia is Red

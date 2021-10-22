@@ -4,10 +4,13 @@ from collections import defaultdict
 def lcv_heuristic(next_var, leftover_vars, potential, constraints, domain):
 	d_copy = domain[next_var].copy()
 	for con in constraints[next_var]:
-		if potential.get(con, None) and potential[con] in d_copy:
+		if con in potential and potential[con] in d_copy:
 			d_copy.remove(potential[con])
 	
 	maxx = float('-inf')
+	
+	if len(d_copy) == 0: return False
+	if len(d_copy) == 1: return d_copy[0]
 	res = d_copy[0]
 	for dom in d_copy:
 		total = 0
@@ -17,9 +20,8 @@ def lcv_heuristic(next_var, leftover_vars, potential, constraints, domain):
 				if potential.get(cons_cons, None):
 					con_dom -= {potential[cons_cons]}
 			total += len(con_dom)
-
-		if total > maxx:
-			maxx = len(con_dom)
+		if total >= maxx:
+			maxx = total
 			res = dom
 	return res
 			

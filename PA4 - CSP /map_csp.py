@@ -29,9 +29,9 @@ if __name__ == '__main__':
 	call_count = [0] # Variable to track amount of time the recursive backtracking function is called
 
 	# Testing without heuristics or inference techniques
-	normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
-	sol = normal.backtrack(call_count)
-	normal.to_str(sol, call_count)
+	# normal = CSP(v_names, domain, total_domain, constraints, check_constraints)
+	# sol = normal.backtrack(call_count)
+	# normal.to_str(sol, call_count)
 
 	# Testing MRV Heuristic
 	# mrv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, mrv_heuristic)
@@ -44,9 +44,9 @@ if __name__ == '__main__':
 	# degree_test.to_str(sol, call_count)
 
 	# Testing LCV Heuristic 
-	# lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
-	# sol = lcv_test.backtrack(call_count)
-	# lcv_test.to_str(sol, call_count)
+	lcv_test = CSP(v_names, domain, total_domain, constraints, check_constraints, None, lcv_heuristic)
+	sol = lcv_test.backtrack(call_count)
+	lcv_test.to_str(sol, call_count)
 
 	# Testing Inference
 	# AC3_test = CSP(v_names, domain, total_domain, constraints, check_constraints, AC3)

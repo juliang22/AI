@@ -51,18 +51,19 @@ class CSP():
 			next_var = self.heuristic(leftover_vars, potential, self.c, self.d)
 		else:
 			next_var = leftover_vars[0]
-		
-		print(next_var)
 
 		for val in self.d[next_var]:
 			call_count[0] += 1
 
 			# Picking next domain based on a heuristic if it is available
 			if self.heuristic and self.heuristic.__name__ == 'lcv_heuristic':
-				potential[next_var] = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
+				new_dom = self.heuristic(next_var, leftover_vars, potential, self.c, self.d)
+				if new_dom or new_dom == 0:
+					potential[next_var] = new_dom
+				else:
+					continue
 			else:
 				potential[next_var] = val
-			print('v',potential[next_var] )
 
 			# Continue if the domain is valid
 			if self.c_check(next_var, potential, self.c, self.total_domains): 
