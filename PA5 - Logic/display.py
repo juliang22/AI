@@ -1,11 +1,10 @@
 from Sudoku import Sudoku
 import sys
 
-def display_sudoku_solution(solution):
+def display_sudoku_solution(solution=None):
 
     test_sudoku = Sudoku()
-    # test_sudoku.read_sol('puzzle1.sud')
-    test_sudoku.read_sol(solution)
+    test_sudoku.read_solution(solution)
     print(test_sudoku)
 
 if __name__ == "__main__":
