@@ -13,6 +13,11 @@ if __name__ == "__main__":
 	# test_mp1.filtering()
 
 	# Maze 2
+	# test_maze2 = Maze("maze2.maz")
+	# test_mp2 = BrokenSensorProblem(test_maze2)
+	# test_mp2.filtering()
+
+	# Maze 3
 	test_maze2 = Maze("maze3.maz")
 	test_mp2 = BrokenSensorProblem(test_maze2)
 	test_mp2.filtering()

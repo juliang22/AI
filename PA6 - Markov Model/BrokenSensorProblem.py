@@ -1,15 +1,12 @@
 from Maze import Maze
 from time import sleep
 import random
-from colorama import Fore
 
 class BrokenSensorProblem:
 
     # Initializes variables
     def __init__(self, maze):
         self.maze = maze
-
-
         self.size = maze.width*maze.height
         self.probs = [[1/self.size] * self.maze.width for i in range(self.maze.height)]
         self.res = None
@@ -39,8 +36,8 @@ class BrokenSensorProblem:
                     p_line += f"{'{0:>5}'.format(round(self.probs[x][y]*100,2))}% "
 
                 if [y,x] == move: 
-                    line = line[:x] + "□" + line[x + 1:]
-                    p_line += "{0:>5}".format("   □   ")
+                    line = line[:x] + line[x].upper() + line[x + 1:]
+                    p_line += f"{'~{0:>5}'.format(round(self.probs[x][y]*100,2))}%~ "
 
             print(line, '                       ', p_line)
         sleep(.3)
@@ -79,9 +76,9 @@ class BrokenSensorProblem:
         highest_prob = None
         for y in range(self.maze.height):
             for x in range(self.maze.width):
-                if self.probs[x][y] > maxx:
-                    maxx = self.probs[x][y]
-                    highest_prob = [x,y]
+                if self.probs[y][x] > maxx:
+                    maxx = self.probs[y][x]
+                    highest_prob = [y,x]
 
         if highest_prob == self.maze.robotloc:
             self.res = self.maze.robotloc
@@ -96,7 +93,6 @@ class BrokenSensorProblem:
         while not self.found():
             print(num_moves, '\n')
             num_moves += 1
-            self.found()
             self.transition()
             move = self.maze.move()
             self.update_model()
